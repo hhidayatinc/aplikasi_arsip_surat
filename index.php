@@ -30,13 +30,14 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="table-responsive">
+                                        <form method="post">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Cari surat ..." name="cari" aria-label="Cari surat ..." aria-describedby="button-addon2">
-                                            <button class="btn btn-primary" type="submit" id="cari">Search</button>
-                                            <?php include 'koneksi.php';
-                                            if(isset($_GET['cari'])){
-                                                $cari = $_GET['cari'];}?>
+                                            <label for="cari" class="col-sm-2 col-form-label">Cari surat: </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="cari">
+                                            </div>
                                         </div>
+                                        </form>
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
@@ -49,9 +50,9 @@
                                                 <?php
                                                 include 'koneksi.php';
 
-                                                if(isset($_GET['cari'])){
-                                                    $cari=$_GET['cari'];
-                                                    $query = "SELECT*FROM arsip WHERE judul LIKE '%".$cari."%'";
+                                                if(isset($_POST['cari'])){
+                                                    $cari=trim($_POST['cari']);
+                                                    $query = "SELECT a.id, a.nomor_surat, a.judul, a.created_at, a.nama_file, k.kategori FROM arsip a INNER JOIN kategori k ON a.id_kategori=k.id WHERE a.judul LIKE '%".$cari."%'";
                                                     $result = mysqli_query($conn, $query);
                                                   } else{
                                                   $query = "SELECT a.id, a.nomor_surat, a.judul, a.created_at, a.nama_file, k.kategori FROM arsip a INNER JOIN kategori k ON a.id_kategori=k.id";
@@ -68,7 +69,7 @@
                                                         <td><?php echo $row['created_at'];?></td>
                                                         <td>
                                                         <a href="hapus.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Apakah anda yakin ingin menghapus ini ?')"><input type="submit" class="btn btn-danger" value="Hapus"></a>
-                                                        <a class="btn btn-success" href="download_file.php?url=<?Php echo $row['nama_file']; ?>" role="button">Unduh</a>
+                                                        <a class="btn btn-success" href="download_file.php?filename=<?Php echo $row['nama_file']; ?>" role="button">Unduh</a>
                                                         <a class="btn btn-primary" href="lihat_pdf.php?id=<?php echo $row['id']; ?>" role="button">Lihat</a>
                                                     </tr>
                                                     <?php
