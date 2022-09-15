@@ -17,7 +17,7 @@
          $query = mysqli_query($conn,"SELECT id FROM arsip ORDER BY id DESC LIMIT 1");
          $data = mysqli_fetch_array($query);
 
-         $generate = date("ymd_his_").rand(1111,9999);
+         $generate = date("ymd_").$judul;
          $nama_baru = $generate.".pdf";
          $file_tmp = $_FILES['file']['tmp_name'];
          $folder = "pdf";
