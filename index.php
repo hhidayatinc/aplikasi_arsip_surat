@@ -52,7 +52,7 @@
 
                                                 if(isset($_POST['cari'])){
                                                     $cari=trim($_POST['cari']);
-                                                    $query = "SELECT a.id, a.nomor_surat, a.judul, a.created_at, a.nama_file, k.kategori FROM arsip a INNER JOIN kategori k ON a.id_kategori=k.id WHERE a.judul OR a.nomor_surat LIKE '%".$cari."%'";
+                                                    $query = "SELECT a.id, a.nomor_surat, a.judul, a.created_at, a.nama_file, k.kategori FROM arsip a INNER JOIN kategori k ON a.id_kategori=k.id WHERE k.kategori LIKE '%".$cari."%'";
                                                     $result = mysqli_query($conn, $query);
                                                   } else{
                                                   $query = "SELECT a.id, a.nomor_surat, a.judul, a.created_at, a.nama_file, k.kategori FROM arsip a INNER JOIN kategori k ON a.id_kategori=k.id";
